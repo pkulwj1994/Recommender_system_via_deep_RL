@@ -44,7 +44,7 @@ class DRRAgent:
         self.embedding_network([np.zeros((1,)),np.zeros((1,))])
         # self.embedding_network = UserMovieEmbedding(users_num, self.embedding_dim)
         # self.embedding_network([np.zeros((1)),np.zeros((1,100))])
-        self.embedding_network.load_weights('/content/drive/MyDrive/RL_Reco/save_weights/user_movie_embedding_case4.h5')
+        self.embedding_network.load_weights('/content/save_weights/user_movie_embedding_case4.h5')
 
         self.srm_ave = DRRAveStateRepresentation(self.embedding_dim)
         self.srm_ave([np.zeros((1, 100,)),np.zeros((1,state_size, 100))])
