@@ -44,7 +44,7 @@ class DRRAgent:
         self.embedding_network([np.zeros((1,)),np.zeros((1,))])
         # self.embedding_network = UserMovieEmbedding(users_num, self.embedding_dim)
         # self.embedding_network([np.zeros((1)),np.zeros((1,100))])
-        self.embedding_network.load_weights('/home/diominor/Workspace/DRR/save_weights/user_movie_embedding_case4.h5')
+        self.embedding_network.load_weights('/content/drive/MyDrive/RL_Reco/save_weights/user_movie_embedding_case4.h5')
 
         self.srm_ave = DRRAveStateRepresentation(self.embedding_dim)
         self.srm_ave([np.zeros((1, 100,)),np.zeros((1,state_size, 100))])
@@ -105,7 +105,7 @@ class DRRAgent:
         self.critic.update_target_network()
 
         if load_model:
-            self.load_model("/content/save_weights/actor_50000.h5", "/content/save_weights/critic_50000.h5")
+            self.load_model("/content/drive/MyDrive/RL_Reco/save_weights/actor_50000.h5", "/content/drive/MyDrive/RL_Reco/save_weights/critic_50000.h5")
             print('Completely load weights!')
 
         episodic_precision_history = []
@@ -203,11 +203,11 @@ class DRRAgent:
              
             if (episode+1)%50 == 0:
                 plt.plot(episodic_precision_history)
-                plt.savefig(f'/home/diominor/Workspace/DRR/images/training_precision_%_top_5.png')
+                plt.savefig(f'/home/diominor/Workspace/RL_Reco/images/training_precision_%_top_5.png')
 
             if (episode+1)%1000 == 0:
-                self.save_model(f'/home/diominor/Workspace/DRR/save_weights/actor_{episode+1}_fixed.h5',
-                                f'/home/diominor/Workspace/DRR/save_weights/critic_{episode+1}_fixed.h5')
+                self.save_model(f'/content/drive/MyDrive/RL_Reco/save_weights/actor_{episode+1}_fixed.h5',
+                                f'/content/drive/MyDrive/RL_Reco/save_weights/critic_{episode+1}_fixed.h5')
 
     def save_model(self, actor_path, critic_path):
         self.actor.save_weights(actor_path)
