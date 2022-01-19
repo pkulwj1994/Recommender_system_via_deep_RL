@@ -105,7 +105,7 @@ class DRRAgent:
         self.critic.update_target_network()
 
         if load_model:
-            self.load_model("/home/diominor/Workspace/DRR/save_weights/actor_50000.h5", "/home/diominor/Workspace/DRR/save_weights/critic_50000.h5")
+            self.load_model("/content/save_weights/actor_50000.h5", "/content/save_weights/critic_50000.h5")
             print('Completely load weights!')
 
         episodic_precision_history = []
