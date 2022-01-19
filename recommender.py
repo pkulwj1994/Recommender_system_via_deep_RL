@@ -203,7 +203,7 @@ class DRRAgent:
              
             if (episode+1)%50 == 0:
                 plt.plot(episodic_precision_history)
-                plt.savefig(f'/home/diominor/Workspace/RL_Reco/images/training_precision_%_top_5.png')
+                plt.savefig(f'/content/drive/MyDrive/RL_Reco/images/training_precision_%_top_5.png')
 
             if (episode+1)%1000 == 0:
                 self.save_model(f'/content/drive/MyDrive/RL_Reco/save_weights/actor_{episode+1}_fixed.h5',
