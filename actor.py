@@ -22,21 +22,21 @@ class Actor(object):
         self.embedding_dim = embedding_dim
         self.state_size = state_size
         
-        # 엑터 네트워크 actor network / 타겟 네트워크 target network
+        # 演员网络/目标网络 目标网络
         self.network = ActorNetwork(embedding_dim, hidden_dim)
         self.target_network = ActorNetwork(embedding_dim, hidden_dim)
-        # 옵티마이저 optimizer
+        # 优化器 optimizer
         self.optimizer = tf.keras.optimizers.Adam(learning_rate)
-        # 소프트 타겟 네트워크 업데이트 하이퍼파라미터 soft target network update hyperparameter
+        # soft target network update hyperparameter
         self.tau = tau
     
     def build_networks(self):
-        # 네트워크들 빌딩 / Build networks
+        # Build networks
         self.network(np.zeros((1, 3*self.embedding_dim)))
         self.target_network(np.zeros((1, 3*self.embedding_dim)))
     
     def update_target_network(self):
-        # 소프트 타겟 네트워크 업데이트 soft target network update
+        # soft target network update
         c_theta, t_theta = self.network.get_weights(), self.target_network.get_weights()
         for i in range(len(c_theta)):
             t_theta[i] = self.tau * c_theta[i] + (1 - self.tau) * t_theta[i]
