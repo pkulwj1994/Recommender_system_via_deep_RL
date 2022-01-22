@@ -100,7 +100,7 @@ class DRRAgent:
             return items_ids[item_idx]
         
     def train(self, max_episode_num, top_k=False, load_model=False):
-        # 타겟 네트워크들 초기화
+        # 初始化目标网络
         self.actor.update_target_network()
         self.critic.update_target_network()
 
@@ -117,21 +117,21 @@ class DRRAgent:
             steps = 0
             q_loss = 0
             mean_action = 0
-            # Environment 리셋
+            # Environment 
             user_id, items_ids, done = self.env.reset()
             # print(f'user_id : {user_id}, rated_items_length:{len(self.env.user_items)}')
             # print('items : ', self.env.get_items_names(items_ids))
             while not done:
                 
                 # Observe current state & Find action
-                ## Embedding 해주기
+                ## Embedding 
                 user_eb = self.embedding_network.get_layer('user_embedding')(np.array(user_id))
                 items_eb = self.embedding_network.get_layer('movie_embedding')(np.array(items_ids))
                 # items_eb = self.m_embedding_network.get_layer('movie_embedding')(np.array(items_ids))
-                ## SRM으로 state 출력
+                ## SRM state 
                 state = self.srm_ave([np.expand_dims(user_eb, axis=0), np.expand_dims(items_eb, axis=0)])
 
-                ## Action(ranking score) 출력
+                ## Action(ranking score) 
                 action = self.actor.network(state)
 
                 ## ε-greedy exploration
@@ -139,7 +139,7 @@ class DRRAgent:
                     self.epsilon -= self.epsilon_decay
                     action += np.random.normal(0,self.std,size=action.shape)
 
-                ## Item 추천
+                ## Item 
                 recommended_item = self.recommend_item(action, self.env.recommended_items, top_k=top_k)
                 
                 # Calculate reward & observe new state (in env)
@@ -153,7 +153,7 @@ class DRRAgent:
                 # next_items_eb = self.m_embedding_network.get_layer('movie_embedding')(np.array(next_items_ids))
                 next_state = self.srm_ave([np.expand_dims(user_eb, axis=0), np.expand_dims(next_items_eb, axis=0)])
 
-                # buffer에 저장
+                # buffer
                 self.buffer.append(state, action, reward, next_state, done)
                 
                 if self.buffer.crt_idx > 1 or self.buffer.is_full:
