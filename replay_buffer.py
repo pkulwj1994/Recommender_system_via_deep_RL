@@ -15,7 +15,7 @@ class PriorityExperienceReplay(object):
         
         '''
             state : (300,), 
-            next_state : (300,) 변할 수 잇음, 
+            next_state : (300,) , 
             actions : (100,), 
             rewards : (1,), 
             dones : (1,)
